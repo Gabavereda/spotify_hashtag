@@ -1,0 +1,13 @@
+{
+  "name": "clone_spotify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install && npm install --prefix back-end && npm install --prefix front-end && npm run build --prefix front-end",
+    "start": "cd back-end && npm start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
