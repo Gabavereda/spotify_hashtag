@@ -1,4 +1,4 @@
-// para pouxar esse array em outro componente
+// const array = [{ chave: 2 }, { chave2: 51 }, 3, "valor", "valor2"];
 
 // export const artistArray = [
 //   {
@@ -126,5 +126,5 @@
 // ];
 
 import { artistArray } from "../../../api/api.js";
-export { artistArray };
 
+export { artistArray };
