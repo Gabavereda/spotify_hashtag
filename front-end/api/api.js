@@ -2,7 +2,8 @@ import axios from "axios";
 
 
 // const { NODE_ENV } = process.env;
-const URL = "https://spotify-hashtag-n2nv.onrender.com";
+const URL = "https://spotify-hashtag-n2nv.onrender.com/api";
+
 
 // passa para o axios apos o tratamento com middleware
 const responseArtist = await axios.get(`${URL}/artists`);
