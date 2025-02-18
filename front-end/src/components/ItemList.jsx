@@ -11,7 +11,7 @@ const ItemList = ({ title, items, itemsArray, path, idPath }) => {
     // declarando o booleano para validar se eseta na home
     const isHome = pathname === "/";
     //  aqui acontece uma validação , se está na home ele retorna um numero limitado de itens senao me retorna todos os items disponiveis
-    const finalItem = isHome ? items : Infinity;
+    const finalItems = isHome ? items : Infinity;
     return (
         <div className="item-list">
             <div className="item-list__header">
