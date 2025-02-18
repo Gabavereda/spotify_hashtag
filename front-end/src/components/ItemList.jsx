@@ -13,22 +13,22 @@ const ItemList = ({ title, items, itemsArray, path, idPath }) => {
     //  aqui acontece uma validação , se está na home ele retorna um numero limitado de itens senao me retorna todos os items disponiveis
     const finalItem = isHome ? items : Infinity;
     return (
-        <div className='item-list'>
-            <div className='item-list__header'>
+        <div className="item-list">
+            <div className="item-list__header">
                 <h2>{title} populares</h2>
-                {isHome ? (<Link to={path} className='item-list__link' >
-                    Mostrar Tudo
-                </Link>
+
+                {isHome ? (
+                    <Link to={path} className="item-list__link">
+                        Mostrar tudo
+                    </Link>
                 ) : (
                     <></>
                 )}
-
-
             </div>
-            <div className='item-list__container'>
-                {/* cria o array , filtra ele com numero de posicoes para trazer apenas o que se deseja de elementos/componetes preenche ele, e usa o map para retorna um valor baseado no n index */}
+
+            <div className="item-list__container">
                 {itemsArray
-                    .filter((currentValue, index) => index < finalItem)
+                    .filter((currentValue, index) => index < finalItems)
                     .map((currObj, index) => (
                         <SingleItem
                             // id={currObj.id}
@@ -37,7 +37,9 @@ const ItemList = ({ title, items, itemsArray, path, idPath }) => {
                             // banner={currObj.banner}
                             {...currObj}
                             idPath={idPath}
-                            key={`${title}--${index}`} />))}
+                            key={`${title}-${index}`}
+                        />
+                    ))}
             </div>
         </div>
     );
