@@ -1,16 +1,12 @@
 import axios from "axios";
 
+const URL = import.meta.env.DEV
+  ? "http://localhost:3001/api" // quando rodando `npm run dev`
+  : "https://spotify-hashtag-n2nv.onrender.com/api"; // quando buildado
 
-// const { NODE_ENV } = process.env;
-const URL = "https://spotify-hashtag-n2nv.onrender.com/api";
-
-
-// passa para o axios apos o tratamento com middleware
+// Carrega artistas
 const responseArtist = await axios.get(`${URL}/artists`);
 const responseSongs = await axios.get(`${URL}/songs`);
 
-// apos pegar os daddos, filtra o obj data que contem o que quero 
 export const artistArray = responseArtist.data;
 export const songsArray = responseSongs.data;
-
-// console.log(responseSongs.data);
