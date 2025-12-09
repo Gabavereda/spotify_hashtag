@@ -1,14 +1,18 @@
-// JavaScript Assincrono
-// await async
-// Fullfilled
 import { MongoClient } from "mongodb";
 
 const URI = process.env.MONGO_URI;
+
+if (!URI) {
+  console.error("❌ ERRO: MONGO_URI não encontrada no ambiente!");
+}
+
 const client = new MongoClient(URI);
 
-await client.connect();  
+try {
+  await client.connect();
+  console.log("✅ Conectado ao MongoDB com sucesso!");
+} catch (err) {
+  console.error("❌ Erro ao conectar ao MongoDB:", err);
+}
 
 export const db = client.db("spotifyAula");
-// const songCollection = await db.collection("songs").find({}).toArray();
-
-// console.log(songCollection);
