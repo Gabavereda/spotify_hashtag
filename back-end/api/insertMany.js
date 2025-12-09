@@ -16,10 +16,11 @@ const newSongsArray = songsArray.map((currentSongObj) => {
   return newSongObj;
 });
 
-const responseSongs = await db.collection("songs").insertMany(newSongsArray);
-const responseArtists = await db
-  .collection("artists")
-  .insertMany(newArtistArray);
+
+// const responseSongs = await db.collection("songs").insertMany(newSongsArray);
+// const responseArtists = await db
+//   .collection("artists")
+//   .insertMany(newArtistArray);
 
 console.log(responseSongs);
 console.log(responseArtists);
