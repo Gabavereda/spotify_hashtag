@@ -22,8 +22,8 @@ const newSongsArray = songsArray.map((currentSongObj) => {
 //   .collection("artists")
 //   .insertMany(newArtistArray);
 
-console.log(responseSongs);
-console.log(responseArtists);
+// console.log(responseSongs);
+// console.log(responseArtists);
 
 // console.log(newArtistArray);
 // console.log(newSongsArray);
