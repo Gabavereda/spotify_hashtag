@@ -2,7 +2,10 @@ import axios from "axios";
 
 
 // const { NODE_ENV } = process.env;
-const URL = "https://spotify-hashtag-n2nv.onrender.com/api";
+const URI = process.env.MONGO_URI;
+const client = new MongoClient(URI);
+
+await client.connect();  
 
 
 // passa para o axios apos o tratamento com middleware
