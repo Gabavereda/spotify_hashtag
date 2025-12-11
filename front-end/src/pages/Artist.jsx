@@ -1,52 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import SongList from "../components/SongList";
-import { artistArray } from "../assets/database/artists";
-import { songsArray } from "../assets/database/songs";
+import { getArtists, getSongs } from "../../api/api";
 
 const Artist = () => {
   const { id } = useParams();
-  // console.log(useParams());
+  const [artistObj, setArtistObj] = useState(null);
+  const [songsFromArtist, setSongsFromArtist] = useState([]);
 
-  const { name, banner } = artistArray.filter(
-    (currentArtistObj) => currentArtistObj._id === id
-  )[0];
+  useEffect(() => {
+    async function loadData() {
+      const artists = await getArtists();
+      const songs = await getSongs();
 
-  const songsArrayFromArtist = songsArray.filter(
-    (currentSongObj) => currentSongObj.artist === name
-  );
+      const foundArtist = artists.find((a) => a._id === id);
+      setArtistObj(foundArtist);
 
-  const randomIndex = Math.floor(
-    Math.random() * (songsArrayFromArtist.length - 1)
-  );
-  const randomIdFromArtist = songsArrayFromArtist[randomIndex]._id;
+      const filteredSongs = songs.filter(
+        (song) => song.artist === foundArtist?.name
+      );
+      setSongsFromArtist(filteredSongs);
+    }
 
-  // console.log(randomIdFromArtist);
-  // console.log(Math.floor(Math.random() * (songsArrayFromArtist.length - 1)));
-  // console.log("Tamanho do Array:" + songsArrayFromArtist.length);
+    loadData();
+  }, [id]);
 
-  // console.log(songsArrayFromArtist);
+  if (!artistObj) return <p>Carregando...</p>;
+
+  const randomIndex = Math.floor(Math.random() * songsFromArtist.length);
+  const randomId = songsFromArtist[randomIndex]?._id;
 
   return (
     <div className="artist">
       <div
         className="artist__header"
         style={{
-          backgroundImage: `linear-gradient(to bottom, var(--_shade), var(--_shade)),url(${banner})`,
+          backgroundImage: `linear-gradient(to bottom, var(--_shade), var(--_shade)),url(${artistObj.banner})`,
         }}
       >
-        <h2 className="artist__title">{name}</h2>
+        <h2 className="artist__title">{artistObj.name}</h2>
       </div>
 
       <div className="artist__body">
         <h2>Populares</h2>
-
-        <SongList songsArray={songsArrayFromArtist} />
+        <SongList songsArray={songsFromArtist} />
       </div>
 
-      <Link to={`/song/${randomIdFromArtist}`}>
+      <Link to={`/song/${randomId}`}>
         <FontAwesomeIcon
           className="single-item__icon single-item__icon--artist"
           icon={faCirclePlay}

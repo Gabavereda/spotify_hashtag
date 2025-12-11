@@ -1,42 +1,49 @@
-// API significa Application Programming Interface
-// POST, GET, PUT, DELETE
-// CRUD - Create Read Update Delete
-// Endpoint
-// Middleware
-
 import express from "express";
 import cors from "cors";
-import { db } from "./connect.js";
 import path from "path";
+import { db } from "./connect.js";
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+app.use(cors());
+app.use(express.json());
 
 const __dirname = path.resolve();
 
-const app = express();
-const PORT = 3001;
+// ARQUIVOS ESTÁTICOS
+app.use("/public", express.static(path.join(__dirname, "public")));
 
-app.use(cors());
-
-
-// app.use(express.json());
-
-app.get("/api/", (request, response) => {
-  response.send("Só vamos trabalhar com os endpoints '/artists' e '/songs'");
+// ENDPOINTS
+app.get("/api/", (req, res) => {
+  res.send("Use os endpoints /api/artists e /api/songs");
 });
 
-app.get("/api/artists", async (request, response) => {
-  response.send(await db.collection("artists").find({}).toArray());
+app.get("/api/artists", async (req, res) => {
+  try {
+    const list = await db.collection("artists").find({}).toArray();
+    res.send(list);
+  } catch (e) {
+    res.status(500).send({ error: "Erro ao buscar artistas" });
+  }
 });
 
-app.get("/api/songs", async (request, response) => {
-  response.send(await db.collection("songs").find({}).toArray());
+app.get("/api/songs", async (req, res) => {
+  try {
+    const list = await db.collection("songs").find({}).toArray();
+    res.send(list);
+  } catch (e) {
+    res.status(500).send({ error: "Erro ao buscar músicas" });
+  }
 });
 
+// FRONT-END BUILD DO VITE
 app.use(express.static(path.join(__dirname, "../front-end/dist")));
 
-app.get("*", async (request, response) => {
-  response.sendFile(path.join(__dirname, "../front-end/dist/index.html"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../front-end/dist/index.html"));
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor está escutando na porta ${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });

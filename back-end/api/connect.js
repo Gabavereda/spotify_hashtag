@@ -1,18 +1,17 @@
 import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const URI = process.env.MONGO_URI;
 
 if (!URI) {
-  console.error("❌ ERRO: MONGO_URI não encontrada no ambiente!");
+  throw new Error("ERRO: MONGO_URI não encontrada no .env ou no Render");
 }
 
 const client = new MongoClient(URI);
 
-try {
-  await client.connect();
-  console.log("✅ Conectado ao MongoDB com sucesso!");
-} catch (err) {
-  console.error("❌ Erro ao conectar ao MongoDB:", err);
-}
+await client.connect();
+console.log("MongoDB conectado com sucesso!");
 
 export const db = client.db("spotifyAula");
