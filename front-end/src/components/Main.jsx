@@ -1,44 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ItemList from "./ItemList";
-import { getArtists, getSongs } from "../../api/api";
+import { artistArray } from "../assets/database/artists";
+import { songsArray } from "../assets/database/songs";
 
 const Main = ({ type }) => {
-  const [artists, setArtists] = useState([]);
-  const [songs, setSongs] = useState([]);
-
-  useEffect(() => {
-    async function loadData() {
-      const a = await getArtists();
-      const s = await getSongs();
-      setArtists(a);
-      setSongs(s);
-    }
-    loadData();
-  }, []);
-
   return (
     <div className="main">
-
-      {/* Lista de Artistas */}
-      {(type === "artists" || type === undefined) && (
+      {/* Item List de Artistas */}
+      {type === "artists" || type === undefined ? (
         <ItemList
           title="Artistas"
           items={10}
-          itemsArray={artists}
+          itemsArray={artistArray}
           path="/artists"
           idPath="/artist"
         />
+      ) : (
+        <></>
       )}
 
-      {/* Lista de Músicas */}
-      {(type === "songs" || type === undefined) && (
+      {/* Item List de Músicas */}
+      {type === "songs" || type === undefined ? (
         <ItemList
           title="Músicas"
           items={20}
-          itemsArray={songs}
+          itemsArray={songsArray}
           path="/songs"
           idPath="/song"
         />
+      ) : (
+        <></>
       )}
     </div>
   );
